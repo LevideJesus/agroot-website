@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  background-image: url("../images/farm-up-view.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.hero-logo {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 220px;
+  border-radius: 50%;
+
+
+}
+
+@media (max-width: 600px) {
+  .hero { background-attachment: scroll; }
+  .hero-logo { width: 110px; top: 16px; left: 16px; }
+}

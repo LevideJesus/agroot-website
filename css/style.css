@@ -3,40 +3,31 @@
   padding: 0;
   box-sizing: border-box;
 }
-body::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: url("../images/farm-up-view.jpg") center / cover;
-  z-index: -1;
-}
+
 
 .hero {
-  position: relative;
-  height: 40vh;
+  height: 100vh;
+  background: url("../images/farm-up-view.jpg") center / cover;
 
 }
 
 .hero-logo {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  width: 220px;
-  border-radius: 50%;
+  position: fixed;
+  z-index: 10;
 
 
 }
 
 @media (max-width: 600px) {
-  .hero {height: 30vh;}
-  .hero-logo { width: 110px; top: 16px; left: 16px; }
   .slide { padding: 40px 56px; }
   .slide h2 { font-size: 1.5rem; }
 }
 
 .about {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 0 16px 60px;
 }
 

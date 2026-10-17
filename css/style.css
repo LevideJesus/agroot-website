@@ -3,14 +3,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("../images/farm-up-view.jpg") center / cover;
+  z-index: -1;
+}
 
 .hero {
   position: relative;
-  height: 100vh;
-  background-image: url("../images/farm-up-view.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  height: 40vh;
+
 }
 
 .hero-logo {
@@ -24,6 +28,68 @@
 }
 
 @media (max-width: 600px) {
-  .hero { background-attachment: scroll; }
+  .hero {height: 30vh;}
   .hero-logo { width: 110px; top: 16px; left: 16px; }
+  .slide { padding: 40px 56px; }
+  .slide h2 { font-size: 1.5rem; }
 }
+
+.about {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 60px;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.slides {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.slides::-webkit-scrollbar { display: none; }
+
+.slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  padding: 60px 70px;
+  color: #FFF8EC;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.slide h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFF8EC;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.prev { left: 12px; }
+.next { right: 12px; }

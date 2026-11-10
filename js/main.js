@@ -8,7 +8,7 @@ function updateLogo() {
   const progress = Math.min(window.scrollY / (h * 0.6), 1);
 
   const startSize = Math.min(w * 0.6, 360);
-  const endSize = mobile ? 90 : 140;
+  const endSize = mobile ? 64 : 96;
   const size = startSize + (endSize - startSize) * progress;
 
   const startX = (w - startSize) / 2;
@@ -39,3 +39,45 @@ if (slides) {
     slides.scrollTo({ left: atStart ? slides.scrollWidth : slides.scrollLeft - width(), behavior: "smooth" });
   });
 }
+
+
+if (window.lucide) lucide.createIcons();
+
+const dotsBox = document.querySelector(".dots");
+
+if (slides && dotsBox) {
+  const count = slides.children.length;
+
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement("button");
+    dot.className = "dot";
+    dot.setAttribute("aria-label", "Slide " + (i + 1));
+    dot.addEventListener("click", () => {
+      slides.scrollTo({ left: i * slides.clientWidth, behavior: "smooth" });
+    });
+    dotsBox.appendChild(dot);
+  }
+
+  const updateDots = () => {
+    const index = Math.round(slides.scrollLeft / slides.clientWidth);
+    dotsBox.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i === index));
+  };
+
+  slides.addEventListener("scroll", updateDots, { passive: true });
+  updateDots();
+}
+
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".reveal").forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.1 + "s";
+  revealObserver.observe(el);
+});

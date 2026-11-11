@@ -13,6 +13,7 @@
 .hero-logo {
   position: fixed;
   z-index: 10;
+  transition: opacity 0.3s ease;
 }
 
 
@@ -149,4 +150,73 @@
   .journal { gap: 56px; }
   .pack-list { grid-template-columns: 1fr; }
 
+}
+
+
+html { scroll-behavior: smooth; }
+
+#inicio, #o-que-fazemos { scroll-margin-top: 0; }
+#pacotes, #futuro { scroll-margin-top: 110px; }
+
+.nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 20;
+  transform: translate(-50%, -12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.nav.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  background: rgba(251, 248, 241, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: #1f2a22;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background 0.25s ease;
+}
+
+.nav-links a:hover { background: rgba(31, 42, 34, 0.07); }
+
+.nav-links .nav-cta {
+  background: #1f2a22;
+  color: #fbf8f1;
+  margin-left: 4px;
+}
+
+.nav-links .nav-cta:hover { background: #33453a; }
+
+@media (max-width: 600px) {
+  .nav { top: 12px; }
+  .nav-links { padding: 4px; }
+  .nav-links a { height: 32px; padding: 0 10px; font-size: 0.74rem; }
+  .nav-links .nav-cta { margin-left: 2px; }
 }

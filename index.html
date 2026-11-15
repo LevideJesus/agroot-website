@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agroot</title>
-    <link rel="stylesheet" href="css/style.css?v=6">
+     <link rel="stylesheet" href="css/style.css?v=7">
+    <link rel="stylesheet" href="css/letter.css?v=8">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -14,7 +15,7 @@
             <a href="#inicio">Início</a>
             <a href="#o-que-fazemos">O que fazemos</a>
             <a href="#pacotes">Pacotes</a>
-            <a href="#pacotes" class="nav-cta">Traga sua ideia</a>
+            <a href="#ideia" class="nav-cta">Traga sua ideia</a>
         </nav>
        
     </header>
@@ -78,6 +79,41 @@
             </article>
 
         </div>
+    </section>
+
+    <section class="ideia" id="ideia">
+
+    <div class="ideia-board reveal">
+
+        <form class="letter" id="letter-form" novalidate>
+            <p class="label">Traga sua ideia</p>
+            <h2 class="letter-hello">Agroot,</h2>
+
+            <textarea id="letter-msg" name="mensagem" rows="6" required
+                placeholder="Conte o que a sua fazenda precisa. Pode ser um problema, um sonho ou só uma ideia..."></textarea>
+
+            <p class="letter-sign">Atenciosamente,</p>
+            <div class="letter-from">
+                <input id="letter-name" name="nome" type="text" placeholder="Seu nome" required>
+                <span>&middot;</span>
+                <input id="letter-contact" name="contato" type="text" placeholder="WhatsApp ou e-mail" required>
+            </div>
+
+            <p class="letter-error" id="letter-error" aria-live="polite"></p>
+        </form>
+
+        <div class="mail">
+            <div class="envelope" id="envelope">
+                <div class="env-flap"></div>
+                <div class="env-seal" aria-hidden="true">
+                    <img src="images/agroot-logo-2.png" alt="">
+                </div>
+            </div>
+            <button type="submit" form="letter-form" class="letter-btn" id="letter-btn">Selar e enviar &rarr;</button>
+            <p class="mail-note" id="mail-note">A carta dobra, vira envelope e recebe o selo da Agroot.</p>
+        </div>
+
+    </div>
     </section>
 
     

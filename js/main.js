@@ -1,3 +1,4 @@
+
 const logo = document.querySelector(".hero-logo");
 
 function updateLogo() {
@@ -19,6 +20,7 @@ function updateLogo() {
   logo.style.left = startX + (endPos - startX) * progress + "px";
   logo.style.top = startY + (endPos - startY) * progress + "px";
 
+ 
   const hide = w < 800 && window.scrollY > h * 0.9;
   logo.style.opacity = hide ? 0 : 1;
   logo.style.pointerEvents = hide ? "none" : "auto";
@@ -28,50 +30,6 @@ window.addEventListener("scroll", updateLogo);
 window.addEventListener("resize", updateLogo);
 updateLogo();
 
-const slides = document.querySelector(".slides");
-
-if (slides) {
-  const width = () => slides.clientWidth;
-
-  document.querySelector(".next").addEventListener("click", () => {
-    const atEnd = slides.scrollLeft + width() >= slides.scrollWidth - 1;
-    slides.scrollTo({ left: atEnd ? 0 : slides.scrollLeft + width(), behavior: "smooth" });
-  });
-
-  document.querySelector(".prev").addEventListener("click", () => {
-    const atStart = slides.scrollLeft <= 0;
-    slides.scrollTo({ left: atStart ? slides.scrollWidth : slides.scrollLeft - width(), behavior: "smooth" });
-  });
-}
-
-
-
-
-if (window.lucide) lucide.createIcons();
-
-const dotsBox = document.querySelector(".dots");
-
-if (slides && dotsBox) {
-  const count = slides.children.length;
-
-  for (let i = 0; i < count; i++) {
-    const dot = document.createElement("button");
-    dot.className = "dot";
-    dot.setAttribute("aria-label", "Slide " + (i + 1));
-    dot.addEventListener("click", () => {
-      slides.scrollTo({ left: i * slides.clientWidth, behavior: "smooth" });
-    });
-    dotsBox.appendChild(dot);
-  }
-
-  const updateDots = () => {
-    const index = Math.round(slides.scrollLeft / slides.clientWidth);
-    dotsBox.querySelectorAll(".dot").forEach((d, i) => d.classList.toggle("active", i === index));
-  };
-
-  slides.addEventListener("scroll", updateDots, { passive: true });
-  updateDots();
-}
 
 
 const revealObserver = new IntersectionObserver((entries) => {
@@ -81,46 +39,24 @@ const revealObserver = new IntersectionObserver((entries) => {
       revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.2 });
+}, { threshold: 0.1 });
 
-document.querySelectorAll(".reveal").forEach((el, i) => {
-  el.style.transitionDelay = (i % 4) * 0.1 + "s";
-  revealObserver.observe(el);
-});
+document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+
 
 const nav = document.querySelector(".nav");
-const navToggle = document.getElementById("nav-toggle");
-
-if (nav && navToggle) {
-  navToggle.addEventListener("click", () => {
-    const open = nav.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", open);
-    navToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
-  });
-
-  nav.querySelectorAll(".nav-links a").forEach((link) => {
-    link.addEventListener("click", () => {
-      nav.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-      navToggle.setAttribute("aria-label", "Abrir menu");
-    });
-  });
-}
-
 const whatSection = document.querySelector(".what");
 const board = document.querySelector(".journal");
+
 
 function updateNav() {
   const sectionTop = whatSection.getBoundingClientRect().top;
   const boardTop = board.getBoundingClientRect().top;
   const navBottom = nav.getBoundingClientRect().bottom + 16;
 
-  const reachedSection = sectionTop <= 1;
-  const boardBelowNav = boardTop > navBottom;
-  const show = reachedSection && boardBelowNav;
-
+  const show = sectionTop <= 1 && boardTop > navBottom;
   nav.classList.toggle("show", show);
-  if (!show) nav.classList.remove("open");
 }
 
 if (nav && whatSection && board) {
@@ -130,17 +66,56 @@ if (nav && whatSection && board) {
 }
 
 
-document.querySelectorAll('.nav-links a[href^="#"]').forEach((link) => {
+function scrollToSection(target) {
+  const offset = target.id === "inicio" || target.id === "o-que-fazemos" ? 0 : 60;
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: "smooth" });
+}
+
+document.querySelectorAll('.nav-links a[href^="#"], .footer a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (e) => {
     const target = document.querySelector(link.getAttribute("href"));
     if (!target) return;
     e.preventDefault();
+    scrollToSection(target);
+  });
+});
 
-    const insideBoard = target.closest(".journal");
-    const offset = insideBoard ? 110 : 0;
-    const top = target.getBoundingClientRect().top + window.scrollY - offset;
 
-    window.scrollTo({ top, behavior: "smooth" });
+
+document.querySelectorAll(".pack-video").forEach((box) => {
+  const video = box.querySelector("video");
+  box.addEventListener("click", () => {
+    if (box.classList.contains("soon")) return;
+    if (video.paused) {
+      document.querySelectorAll(".pack-video video").forEach((v) => { if (v !== video) v.pause(); });
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  });
+  video.addEventListener("play", () => box.classList.add("playing"));
+  video.addEventListener("pause", () => box.classList.remove("playing"));
+});
+
+
+document.querySelectorAll(".pack-btn[data-pack]").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const msg = document.getElementById("letter-msg");
+    const target = document.getElementById("ideia");
+    if (!msg || !target) return;
+    e.preventDefault();
+
+    msg.value = btn.dataset.pack === "Sob encomenda"
+      ? "Tenho uma ideia sob encomenda: "
+      : "Tenho interesse no pacote " + btn.dataset.pack + ". ";
+    msg.dispatchEvent(new Event("input"));
+
+    scrollToSection(target);
+    setTimeout(() => {
+      msg.focus({ preventScroll: true });
+      msg.setSelectionRange(msg.value.length, msg.value.length);
+    }, 700);
   });
 });
 
@@ -152,17 +127,17 @@ const letterForm = document.getElementById("letter-form");
 
 if (letterForm) {
   const ideia = document.getElementById("ideia");
-  const board = document.querySelector(".ideia-board");
+  const letterBoard = document.querySelector(".ideia-board");
   const envelope = document.getElementById("envelope");
   const msg = document.getElementById("letter-msg");
   const nameInput = document.getElementById("letter-name");
   const contact = document.getElementById("letter-contact");
+  const botcheck = document.getElementById("letter-botcheck");
   const error = document.getElementById("letter-error");
   const btn = document.getElementById("letter-btn");
   const note = document.getElementById("mail-note");
   const LINE = 38;
   const MIN_LINES = 5;
-  const defaultNote = note.innerHTML;
 
   
   function growMessage() {
@@ -174,21 +149,21 @@ if (letterForm) {
 
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  
   function measureCenter() {
-    const b = board.getBoundingClientRect();
+    const b = letterBoard.getBoundingClientRect();
     const e = envelope.getBoundingClientRect();
     envelope.style.setProperty("--cx", (b.left + b.width / 2) - (e.left + e.width / 2) + "px");
     envelope.style.setProperty("--cy", (b.top + b.height / 2) - (e.top + e.height / 2) + "px");
   }
 
- 
+  
   function sendLetter() {
     return fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
+        botcheck: botcheck ? botcheck.checked : false,
         subject: "Nova carta para a Agroot - " + nameInput.value.trim(),
         from_name: "Site Agroot",
         nome: nameInput.value.trim(),
@@ -214,17 +189,17 @@ if (letterForm) {
 
     const sending = sendLetter();
 
-   
+  
     ideia.classList.add("sending");
     await wait(650);
-  
+ 
     ideia.classList.add("sealed");
     await wait(350);
     
     measureCenter();
     ideia.classList.add("centering");
     await wait(650);
-  
+   
     ideia.classList.add("stamped");
     await wait(800);
     
@@ -244,7 +219,7 @@ if (letterForm) {
     await wait(800);
     ideia.classList.remove("returning");
     btn.disabled = false;
-    setTimeout(() => { note.innerHTML = defaultNote; }, 6000);
+    setTimeout(() => { note.textContent = ""; }, 6000);
   });
 }
 

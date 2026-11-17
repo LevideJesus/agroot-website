@@ -1,0 +1,227 @@
+/* ===== Pacotes ===== */
+.packs {
+  max-width: 1000px;
+  margin: clamp(80px, 10vw, 140px) auto 0;
+  background: #fbf8f1;
+  padding: clamp(28px, 4vw, 56px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #1f2a22;
+}
+
+.packs-head h2 {
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.packs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(20px, 2.5vw, 32px);
+}
+
+.pack { display: flex; flex-direction: column; }
+
+.pack-video {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #1f2a22;
+  margin-bottom: 18px;
+  cursor: pointer;
+}
+
+.pack-video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pack-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(251, 248, 241, 0.92);
+  color: #1f2a22;
+  font-size: 1.2rem;
+  padding-left: 4px;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pack-video:hover .pack-play { transform: translate(-50%, -50%) scale(1.08); }
+.pack-video.playing .pack-play { opacity: 0; }
+
+.pack h3 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.pack p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.pack-btn {
+  align-self: flex-start;
+  padding: 12px 20px;
+  border: 1.5px solid #1f2a22;
+  border-radius: 999px;
+  color: #1f2a22;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.pack-btn:hover { background: #1f2a22; color: #fbf8f1; }
+
+/* Sob encomenda */
+.custom {
+  margin-top: clamp(40px, 5vw, 64px);
+  background: #1f2a22;
+  color: #fbf8f1;
+  padding: clamp(28px, 4vw, 44px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+}
+
+.custom h3 {
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.12;
+  margin-bottom: 10px;
+}
+
+.custom em { font-style: italic; font-weight: 400; }
+.custom p:not(.label) { font-size: 0.98rem; line-height: 1.6; opacity: 0.85; max-width: 520px; }
+
+.pack-btn.light { border-color: #fbf8f1; color: #fbf8f1; }
+.pack-btn.light:hover { background: #fbf8f1; color: #1f2a22; }
+
+@media (max-width: 800px) {
+  .packs-grid { grid-template-columns: 1fr; }
+  .pack-video { aspect-ratio: 16 / 10; }
+  .custom { grid-template-columns: 1fr; }
+}
+
+
+.pack-video.soon {
+  cursor: default;
+  aspect-ratio: 16 / 10;
+  background: radial-gradient(circle at 50% 60%, #3a4e35, #233020 75%);
+}
+
+.pack-video.soon video,
+.pack-video.soon .pack-play { display: none; }
+
+
+.pack-video.soon::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  background:
+    linear-gradient(#fbf8f1, #fbf8f1) top left / 22px 2px,
+    linear-gradient(#fbf8f1, #fbf8f1) top left / 2px 22px,
+    linear-gradient(#fbf8f1, #fbf8f1) top right / 22px 2px,
+    linear-gradient(#fbf8f1, #fbf8f1) top right / 2px 22px,
+    linear-gradient(#fbf8f1, #fbf8f1) bottom left / 22px 2px,
+    linear-gradient(#fbf8f1, #fbf8f1) bottom left / 2px 22px,
+    linear-gradient(#fbf8f1, #fbf8f1) bottom right / 22px 2px,
+    linear-gradient(#fbf8f1, #fbf8f1) bottom right / 2px 22px;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.soon-art {
+  position: absolute;
+  inset: 12% 18% 14%;
+}
+
+.soon-art svg { width: 100%; height: 100%; overflow: visible; }
+
+.rec {
+  position: absolute;
+  top: 26px;
+  left: 30px;
+  color: #fbf8f1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.rec::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e0533f;
+  animation: blink 1.2s steps(2, start) infinite;
+}
+
+.soon-tag {
+  position: absolute;
+  right: 30px;
+  bottom: 26px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #fbf8f1;
+  color: #1f2a22;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-style: italic;
+}
+
+
+.soon-art .pot { fill: #c9895a; }
+.soon-art .stem { fill: none; stroke: #9bd16a; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 60; animation: grow 4s ease-in-out infinite; }
+.soon-art .leaf { fill: #9bd16a; transform-box: fill-box; animation: leaf 4s ease-in-out infinite; }
+.soon-art .l1 { transform-origin: right bottom; }
+.soon-art .l2 { transform-origin: left bottom; animation-name: leaf2; }
+.soon-art .l3 { transform-origin: center bottom; animation-name: leaf3; }
+
+
+.soon-art .drops path { fill: #8fd0f2; animation: drop 1.6s ease-in infinite; }
+.soon-art .drops path:nth-child(2) { animation-delay: 0.5s; }
+.soon-art .drops path:nth-child(3) { animation-delay: 1s; }
+.soon-art .mist circle { fill: #fbf8f1; opacity: 0; animation: mist 3s ease-out infinite; }
+.soon-art .mist circle:nth-child(2) { animation-delay: 1s; }
+.soon-art .mist circle:nth-child(3) { animation-delay: 2s; }
+
+
+.soon-art .wave { fill: #8fd0f2; animation: wave 2.4s linear infinite; }
+.soon-art .trough-line { fill: none; stroke: #fbf8f1; stroke-width: 3; stroke-linejoin: round; }
+.soon-art .ping { fill: #f5c400; transform-box: fill-box; transform-origin: center; animation: ping 1.8s ease-out infinite; }
+
+@keyframes blink { to { visibility: hidden; } }
+@keyframes grow { 0% { stroke-dashoffset: 60; } 35%, 90% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 60; } }
+@keyframes leaf { 0%, 30% { transform: scale(0); } 50%, 80% { transform: scale(1); } 88%, 100% { transform: scale(0); } }
+@keyframes leaf2 { 0%, 38% { transform: scale(0); } 56%, 80% { transform: scale(1); } 88%, 100% { transform: scale(0); } }
+@keyframes leaf3 { 0%, 46% { transform: scale(0); } 62%, 80% { transform: scale(1); } 88%, 100% { transform: scale(0); } }
+@keyframes drop { 0% { transform: translateY(-10px); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(70px); opacity: 0; } }
+@keyframes mist { 0% { transform: translateY(10px) scale(0.6); opacity: 0; } 30% { opacity: 0.5; } 100% { transform: translateY(-25px) scale(1.6); opacity: 0; } }
+@keyframes wave { from { transform: translateX(0); } to { transform: translateX(-60px); } }
+@keyframes ping { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.8); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pack-video.soon * { animation: none !important; }
+}

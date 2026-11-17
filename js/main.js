@@ -247,3 +247,4 @@ if (letterForm) {
     setTimeout(() => { note.innerHTML = defaultNote; }, 6000);
   });
 }
+

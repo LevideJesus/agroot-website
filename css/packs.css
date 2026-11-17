@@ -225,3 +225,14 @@
 @media (prefers-reduced-motion: reduce) {
   .pack-video.soon * { animation: none !important; }
 }
+
+
+.pack-video.soon .soon-tag {
+  top: 20px;
+  right: 26px;
+  bottom: auto;
+}
+
+.pack-video.soon .soon-art {
+  inset: 22% 22% 10%;
+}
